@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require_relative './lib/input_validator'
+require_relative './lib/command_generator'
+
+class OptimusGrime
+  class << self
+    def call(inputs)
+      validation_result = InputValidator.new(*inputs).call
+      return "Error! => #{validation_result.error}" unless validation_result.success?
+
+      CommandGenerator.call(validation_result.square_meters)
+    end
+  end
+end
+
+puts OptimusGrime.call(ARGV)
